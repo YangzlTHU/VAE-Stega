@@ -17,7 +17,7 @@ This code belongs to "VAE-Stega: Linguistic Steganography Based on Variational A
 ## Prepare for VAE_LSTM-LSTM model
 
 - Put your corpus file in `data/train_yourdatasetname.txt`
-- Download "BERT-Base, Uncased model" and put in `pre/uncased_L-12_H-768_A-12`
+- Download "BERT-Base, Uncased model" and put it in `pre/uncased_L-12_H-768_A-12`
 - Modify `utils/parameters_bert.py`
 
 
