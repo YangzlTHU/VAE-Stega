@@ -11,12 +11,14 @@ This code belongs to "VAE-Stega: Linguistic Steganography Based on Variational A
 
 ## Prepare for VAE_LSTM-LSTM Model
 
-- Put your corpus file in `data/train_yourdatasetname.txt`
+- Download our corpus file [movie](https://drive.google.com/file/d/1LP4ZIZsHDRf2ZgiMIu2EAIex_iC5WGFM/view?usp=sharing) 
+or [tweet](https://drive.google.com/file/d/12YDuBm29TPkgB-zOpuBBRBBELdjb0uNb/view?usp=sharing) and put it in `data`
 - Modify `utils/parameters.py`
 
 ## Prepare for VAE_LSTM-LSTM model
 
-- Put your corpus file in `data/train_yourdatasetname.txt`
+- Download our corpus file [movie](https://drive.google.com/file/d/1LP4ZIZsHDRf2ZgiMIu2EAIex_iC5WGFM/view?usp=sharing) 
+or [tweet](https://drive.google.com/file/d/12YDuBm29TPkgB-zOpuBBRBBELdjb0uNb/view?usp=sharing) and put it in `data`
 - Download "BERT-Base, Uncased model" and put it in `pre/uncased_L-12_H-768_A-12`
 - Modify `utils/parameters_bert.py`
 
