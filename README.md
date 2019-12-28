@@ -1,3 +1,5 @@
+# VAE-Stega
+
 This code belongs to "VAE-Stega: Linguistic Steganography Based on Variational Auto-Encoder".
 
 ## Requirements
