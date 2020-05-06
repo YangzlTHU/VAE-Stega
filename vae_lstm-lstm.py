@@ -27,7 +27,7 @@ def rnn_placeholders(state):
 
 def online_inference(sess, data_dict, sample, seq, dataset, in_state=None, out_state=None, seed="<BOS>", length=None):
     """Generate sequence one word at a time, based on the previous word."""
-    statistics1 = huffman.get_all_start_words("./data/train_"+dataset+".txt")
+    statistics1 = huffman.get_all_start_words("./data/train_" + dataset + ".txt")
     start_word = huffman.pro_start_word(statistics1)
     sentence = [seed, start_word]
     state = None
@@ -50,8 +50,7 @@ def q_net(vect_inputs, seq_length, batch_size):
     """encoder of vae"""
     with zs.BayesianNet():
         base_cell = tf.contrib.rnn.LSTMCell
-        cell = model.make_rnn_cell([params.decoder_hidden for _ in range(params.decoder_rnn_layers)],
-                                   base_cell=base_cell)
+        cell = model.make_rnn_cell([params.decoder_hidden for _ in range(params.decoder_rnn_layers)], base_cell=base_cell)
         initial = cell.zero_state(batch_size, dtype=tf.float32)
         if params.keep_rate < 1:
             vect_inputs = tf.nn.dropout(vect_inputs, params.keep_rate)
@@ -73,7 +72,7 @@ def q_net(vect_inputs, seq_length, batch_size):
                     prev_y = model.highway_network(prev_y, params.highway_ls)
         lz_mean, lz_logstd = tf.split(final_state, 2, axis=1)
 
-        qz = zs.Normal("z", mean=lz_mean, std=lz_logstd, group_ndims=1)
+        qz = zs.Normal("z", mean=lz_mean, logstd=lz_logstd, group_ndims=1)
         return qz
 
 
@@ -90,8 +89,7 @@ def vae_lstm(observed, batch_size, d_seq_length, embedding, d_inputs_ps, vocab_s
             dec_inps = tf.nn.dropout(dec_inps, params.dec_keep_rate)
 
         base_cell = tf.contrib.rnn.LSTMCell
-        cell = model.make_rnn_cell([params.decoder_hidden for _ in range(params.decoder_rnn_layers)],
-                                   base_cell=base_cell)
+        cell = model.make_rnn_cell([params.decoder_hidden for _ in range(params.decoder_rnn_layers)], base_cell=base_cell)
 
         for i in range(params.highway_lc):
             with tf.variable_scope("hw_layer_dec{0}".format(i)):
@@ -139,8 +137,7 @@ def main(params):
         d_seq_length = tf.placeholder(shape=[None], dtype=tf.float32)
 
         qz = q_net(vect_inputs, seq_length, params.batch_size)
-        x_logits, _, _ = vae_lstm({"z": qz}, params.batch_size, d_seq_length, embedding, d_inputs_ps,
-                                  vocab_size=data_dict.vocab_size)
+        x_logits, _, _ = vae_lstm({"z": qz}, params.batch_size, d_seq_length, embedding, d_inputs_ps, vocab_size=data_dict.vocab_size)
 
         labels_flat = tf.reshape(labels, [-1])
         cross_entr = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=x_logits, labels=labels_flat)
@@ -166,8 +163,7 @@ def main(params):
         clipped_grad, _ = tf.clip_by_global_norm(gradients, 5)
         optimize = opt.apply_gradients(zip(clipped_grad, tf.trainable_variables()))
 
-        logits, states, smpl = vae_lstm({}, 1, d_seq_length, embedding, d_inputs_ps, vocab_size=data_dict.vocab_size,
-                                        gen_mode=True)
+        logits, states, smpl = vae_lstm({}, 1, d_seq_length, embedding, d_inputs_ps, vocab_size=data_dict.vocab_size, gen_mode=True)
         init_state = states[0]
         fin_output = states[1]
 
@@ -204,8 +200,11 @@ def main(params):
                 if not os.path.exists(params.GEN_DIR):
                     os.makedirs(params.GEN_DIR)
                 for i in range(params.gen_num):
-                    gen_sentence = online_inference(sess, data_dict,
-                                                    sample=smpl, seq=d_inputs_ps,
+                    gen_sentence = online_inference(sess,
+                                                    data_dict,
+                                                    sample=smpl,
+                                                    seq=d_inputs_ps,
+                                                    dataset=params.dataset,
                                                     in_state=init_state,
                                                     out_state=fin_output,
                                                     length=d_seq_length)
@@ -234,8 +233,8 @@ def main(params):
                                 seq_length: length_,
                                 d_seq_length: length_,
                                 anneal: cur_it}
-                        lb, _, kld_, ann_, r_loss, perplexity_ = sess.run(
-                            [lower_bound, optimize, kld, annealing, rec_loss, perplexity], feed_dict=feed)
+                        qz, lb, _, kld_, ann_, r_loss, perplexity_ = sess.run(
+                            [qz, lower_bound, optimize, kld, annealing, rec_loss, perplexity], feed_dict=feed)
                         cur_it += 1
                         kld_arr.append(kld_)
                         coeff.append(ann_)
