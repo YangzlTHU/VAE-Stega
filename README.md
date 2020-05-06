@@ -25,13 +25,13 @@ or [tweet](https://drive.google.com/file/d/12YDuBm29TPkgB-zOpuBBRBBELdjb0uNb/vie
 
 ## Training or Generating
 
-VAE_LSTM-LSTM model
+- VAE_LSTM-LSTM model
 
 ```bash
 python vae_lstm-lstm.py
 ```
 
-VAE_BERT-LSTM model
+- VAE_BERT-LSTM model
 
 ```bash
 python vae_bert-lstm.py
