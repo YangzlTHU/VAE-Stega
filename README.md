@@ -11,14 +11,14 @@ This code belongs to "VAE-Stega: Linguistic Steganography Based on Variational A
 
 ## Prepare for VAE_LSTM-LSTM Model
 
-- Download our corpus file [movie](https://drive.google.com/file/d/1LP4ZIZsHDRf2ZgiMIu2EAIex_iC5WGFM/view?usp=sharing) 
-or [tweet](https://drive.google.com/file/d/12YDuBm29TPkgB-zOpuBBRBBELdjb0uNb/view?usp=sharing) and put it in `./data/`
+- Download our corpus file [movie]() 
+or [tweet]() and put it in `./data/`
 - Modify `./utils/parameters.py` to adjust the hyperparameters
 
 ## Prepare for VAE_BERT-LSTM model
 
-- Download our corpus file [movie](https://drive.google.com/file/d/1LP4ZIZsHDRf2ZgiMIu2EAIex_iC5WGFM/view?usp=sharing) 
-or [tweet](https://drive.google.com/file/d/12YDuBm29TPkgB-zOpuBBRBBELdjb0uNb/view?usp=sharing) and put it in `./data/`
+- Download our corpus file [movie](https://drive.google.com/open?id=1rsd0US0Xb4HUOOqjtZSr-M1XITU7jy4k) 
+or [tweet](https://drive.google.com/open?id=1MPhE6RkIMUWIr2boN7Oc0X9knL-9Zs-t) and put it in `./data/`
 - Download "BERT-Base, Uncased model" ([bert](https://github.com/google-research/bert)) and put it in `./pre/uncased_L-12_H-768_A-12`
 - Modify `./utils/parameters_bert.py` to adjust the hyperparameters
 
